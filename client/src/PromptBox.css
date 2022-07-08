@@ -1,0 +1,71 @@
+.box-prompt {
+	margin-bottom: 25px;
+}
+.prompt-auto-expander {
+	display: grid;
+}
+
+.prompt-text {
+	word-wrap: break-word;
+	font-size: 1.5em;
+	font-family: "Roboto Mono", monospace;
+	padding: 0;
+	margin: 0;
+	margin-left: 5px;
+	line-height: 1.7em;
+	color: white;
+}
+.prompt-backboard,
+.prompt {
+	grid-area: 1 / 1 / 2 / 2;
+	border: none;
+	background: none;
+	height: auto;
+	width: auto;
+	outline: none;
+	resize: none;
+}
+.prompt-backboard {
+	/* visibility: hidden; */
+	color: transparent;
+	pointer-events: none;
+	white-space: pre-wrap;
+	z-index: 0;
+}
+.prompt-backboard-prompt {
+	visibility: hidden;
+}
+.prompt {
+	color: white;
+	z-index: 1;
+}
+.prompt:empty {
+	color: black;
+}
+
+.attempt-box-bottom {
+	margin-top: 10px;
+	height: 30px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+.prompt-feedback {
+	font-size: 0.9em;
+	font-weight: bold;
+}
+.prompt-feedback > span {
+	filter: brightness(0.8);
+}
+.prompt-feedback .promptwc {
+	color: var(--prompt-color)
+}
+.prompt-feedback .extrawc {
+	color: var(--completion-color)
+}
+.prompt-feedback .totalwc {
+	color: var(--word-color)
+}
+.attempt-box-bottom > .icon {
+	height: 100%;
+}

@@ -1,0 +1,35 @@
+.blockText-span {
+	position: relative;
+	z-index: 5;
+	--block-left: -0.2em;
+	--block-right: -0.2em;
+}
+.blockText-span::before {
+	z-index: -1;
+	content: ' ';
+	left: var(--block-left);
+	right: var(--block-right);
+	top: -0.03em;
+	bottom: -0.07em;
+	overflow: visible;
+	position: absolute;
+	background: var(--blocktext-background);
+	box-shadow: 0 3px 0 0 var(--blocktext-shadow);
+}
+
+.blockText-span.prompt-block{
+	--blocktext-background: var(--prompt-color);
+	--blocktext-shadow: var(--prompt-shadow-color);
+}
+.blockText-span.completion-block{
+	--blocktext-background: var(--completion-color);
+	--blocktext-shadow: var(--completion-shadow-color);
+}
+.blockText-span.word-block{
+	--blocktext-background: var(--word-color);
+	--blocktext-shadow: var(--word-shadow-color);
+}
+.blockText-span.error-block{
+	--blocktext-background: var(--error-color);
+	--blocktext-shadow: var(--error-shadow-color);
+}
