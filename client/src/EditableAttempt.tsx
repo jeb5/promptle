@@ -32,10 +32,12 @@ export default function EditableAttempt(props: {
 			fullText: string;
 		};
 		try {
-			response = await fetch(`/api/complete?prompt=${promptValue.trim()}`).then(async res => {
-				if (res.status === 400 || res.status === 500) throw new InvalidRequestServerError(await res.text());
-				return await res.json();
-			});
+			response = await fetch(`${process.env.REACT_APP_BASE_PATH}/api/complete?prompt=${promptValue.trim()}`).then(
+				async res => {
+					if (res.status === 400 || res.status === 500) throw new InvalidRequestServerError(await res.text());
+					return await res.json();
+				}
+			);
 		} catch (e) {
 			if (e instanceof InvalidRequestServerError) {
 				alert(`Error: ${e.message}`);

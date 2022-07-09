@@ -1,12 +1,8 @@
-# TODO: change dumb docker containers to share node_modules maybe
-# TODO: add build script
 version: "3.8"
 services:
   redis:
     container_name: promptle-redis
     image: redis:7.0.2
-    # ports: #No need to expose redis
-      # - 6379:6379
     restart: always
     volumes:
       - ./server/redis.conf:/data/redis.conf
@@ -17,21 +13,27 @@ services:
     depends_on:
       - redis 
     ports:
-      - 5678:5000
+      - ${SERVER_PORT}
     restart: always
+    environment:
+      - NODE_ENV=development
+      - SERVER_PORT=${SERVER_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - OPEN_AI_SECRET_KEY=${OPEN_AI_SECRET_KEY}
+      - SESSION_SECRET=${SESSION_SECRET}
     volumes:
       - ./server:/app
-      # - /app/node_modules
   client:
     container_name: promptle-client
     build: "./client"
     depends_on:
     - server
     ports:
-      - 3000:3000
+      - "3000:3000"
     restart: always
     volumes:
       - ./client:/app
-      # - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - SERVER_PORT=${SERVER_PORT}
+      # - BASE_PATH=${BASE_PATH} # Client should only need BASE_PATH during the react-scripts build step, which doesn't occur in docker

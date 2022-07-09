@@ -1,10 +1,8 @@
-import dotEnv from "dotenv";
+import "dotenv/config";
 import connectRedis from "connect-redis";
 import session from "express-session";
 import { createClient } from "redis";
 import { getToday } from "./today";
-
-dotEnv.config();
 
 const redisOptions = {
 	url: "redis://redis:6379",

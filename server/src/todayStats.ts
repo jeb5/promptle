@@ -23,9 +23,9 @@ export async function updateTodayStats(completionResponse: CompletionResponse, s
 		//if this is a player's first win, or if this is a shorter completion, update the player's shortest completion
 		redisSetTodayInfo(`player/${session.id}/shortest-completion`, String(totalPromptLength));
 	}
-	if (playerGamesPlayed + 1 >= ATTEMPT_COUNT && (playerHasYetSucceeded || completionResponse.success)) {
-		//if this is the last attempt and the player has won at least won attempt, update today's stats accordingly
-		const playersBestCompletion = Math.max(playerShortestCompletion, totalPromptLength);
+	if (playerGamesPlayed + 1 === ATTEMPT_COUNT && (playerHasYetSucceeded || completionResponse.success)) {
+		//if this is the last attempt and the player has won at least one attempt, update today's stats accordingly
+		const playersBestCompletion = Math.min(playerShortestCompletion, totalPromptLength);
 		redisIncrementTodayInfo(`total/games-finished-won`); //games both finished and won
 		redisIncrementTodayInfo(`total/best-prompt-lengths-sum`, playersBestCompletion); //total prompt lengths summed from all games finished and won
 	}

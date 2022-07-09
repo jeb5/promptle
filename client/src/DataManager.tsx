@@ -25,7 +25,7 @@ export type UserStats = {
 
 export default function DataManager() {
 	const todayQuery = useQuery("today", () =>
-		fetch("/api/today")
+		fetch(process.env.REACT_APP_BASE_PATH + "/api/today")
 			.then(res => res.json())
 			.then(data => data as TodayInfo)
 	);
@@ -91,7 +91,7 @@ export default function DataManager() {
 			//if we didn't play yesterday, streak drops to 0
 			retrievedUserStats = {
 				...retrievedUserStats,
-				streak: retrievedUserStats.lastGameWon + 1 === todayQuery.data.dayNumber ? retrievedUserStats.streak : 0,
+				streak: retrievedUserStats.lastGameWon >= todayQuery.data.dayNumber - 1 ? retrievedUserStats.streak : 0,
 			};
 			setUserStats(retrievedUserStats);
 

@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  redis:
+    container_name: promptle-redis
+    image: redis:7.0.2
+    restart: always
+    volumes:
+      - ./server/redis.conf:/data/redis.conf
+    command: redis-server redis.conf --requirepass ${REDIS_PASSWORD}
+  server:
+    container_name: promptle-server
+    build: "./server"
+    depends_on:
+      - redis 
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - SERVER_PORT=${SERVER_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - OPEN_AI_SECRET_KEY=${OPEN_AI_SECRET_KEY}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - BASE_PATH=${BASE_PATH}
+    volumes:
+      - ./server:/app

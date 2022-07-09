@@ -1,17 +1,29 @@
 import express from "express";
-import dotenv from "dotenv";
+import "dotenv/config";
+import path from "path";
+import helmet from "helmet";
 import { apiRouter } from "./api";
 import { redisExpressSession } from "./redis";
 
-dotenv.config();
 export const OPEN_AI_SECRET_KEY = process.env.OPEN_AI_SECRET_KEY;
 
 const app = express();
+app.use(helmet());
+const indexRouter = express.Router();
+app.use(process.env.BASE_PATH || "/", indexRouter);
 
-app.use(redisExpressSession);
+if (process.env.NODE_ENV === "production") {
+	indexRouter.use(express.static(path.join(__dirname, "../client_build")));
 
-app.use("/api", apiRouter);
+	indexRouter.get("/", function (req, res) {
+		res.sendFile(path.join(__dirname, "../client_build", "index.html"));
+	});
+}
 
-app.listen(process.env.PORT, () => {
-	console.log(`Server is running on port ${process.env.PORT}`);
+indexRouter.use(redisExpressSession);
+
+indexRouter.use("/api", apiRouter);
+
+app.listen(process.env.SERVER_PORT, () => {
+	console.log(`Server is running on port ${process.env.SERVER_PORT}`);
 });
