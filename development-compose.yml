@@ -21,6 +21,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - OPEN_AI_SECRET_KEY=${OPEN_AI_SECRET_KEY}
       - SESSION_SECRET=${SESSION_SECRET}
+      - SSL_ENABLED=${SSL_ENABLED}
     volumes:
       - ./server:/app
   client:

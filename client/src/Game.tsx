@@ -22,6 +22,7 @@ export default function Game(props: {
 	gameOver: boolean;
 	showStats: () => void;
 }) {
+	//TODO: Next editable attempt ought to draw focus (be typed into by default)
 	return (
 		<>
 			<div className="attempt-boxes">

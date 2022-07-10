@@ -22,5 +22,6 @@ services:
       - OPEN_AI_SECRET_KEY=${OPEN_AI_SECRET_KEY}
       - SESSION_SECRET=${SESSION_SECRET}
       - BASE_PATH=${BASE_PATH}
+      - SSL_ENABLED=${SSL_ENABLED}
     volumes:
       - ./server:/app

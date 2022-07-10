@@ -29,8 +29,9 @@ export const redisExpressSession = session({
 	saveUninitialized: true, //saveUninitialized being set to false prevents cookies from being saved if the session object isn't modified. Without cookies, the session ID changes with every request
 	resave: false,
 	cookie: {
-		secure: process.env.NODE_ENV === "production",
-		// sameSite: "strict",
+		secure: process.env.SSL_ENABLED === "true",
+		path: process.env.BASE_PATH || "/",
+		sameSite: process.env.SSL_ENABLED === "true" ? "none" : "strict", //Can only be "none" if cookies are secure
 	},
 });
 

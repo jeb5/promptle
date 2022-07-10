@@ -8,13 +8,21 @@ import { redisExpressSession } from "./redis";
 export const OPEN_AI_SECRET_KEY = process.env.OPEN_AI_SECRET_KEY;
 
 const app = express();
-app.use(helmet());
+
+app.use(
+	helmet({
+		contentSecurityPolicy: false,
+	})
+);
+
 const indexRouter = express.Router();
 app.use(process.env.BASE_PATH || "/", indexRouter);
 
+if (process.env.SSL_ENABLED === "true") {
+	app.set("trust proxy", 1); //important for cookies.
+}
 if (process.env.NODE_ENV === "production") {
 	indexRouter.use(express.static(path.join(__dirname, "../client_build")));
-
 	indexRouter.get("/", function (req, res) {
 		res.sendFile(path.join(__dirname, "../client_build", "index.html"));
 	});
