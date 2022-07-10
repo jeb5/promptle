@@ -1,11 +1,16 @@
-.popup-overlay {
+.popup-overlay, .popup-positioner {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	height: -webkit-fill-available; /*100vh for mobile safari (the toolbar is otherwise included in the view height)*/
+}
+.popup-overlay {
 	background: rgba(0, 0, 0, 0.3);
+	z-index: 40;
+}
+.popup-positioner{
+	height: -webkit-fill-available; /*100vh for mobile safari (the toolbar is otherwise included in the view height)*/
 	display: flex;
 	justify-content: center;
 	align-items: center;
