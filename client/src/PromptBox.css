@@ -29,7 +29,6 @@
 	/* visibility: hidden; */
 	color: transparent;
 	pointer-events: none;
-	white-space: pre-wrap;
 	z-index: 0;
 }
 .prompt-backboard-prompt {

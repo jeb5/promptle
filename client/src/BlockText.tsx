@@ -26,6 +26,12 @@ function BlockText(props: { children: string; colors: (1 | 2 | 3 | 4)[]; charact
 				<span
 					key={index}
 					className={`blockText-span ${ColorClasses[props.colors[index]]}`}
+					data-content={text}
+					/*
+						This data attribute is used as the "content" of the span's ::before pseudo-element.
+						I shouldn't need to set content for this pseudo-element, but Safari refuses to repaint the element if some attribute on it doesn't change as the text changes.
+						(See https://stackoverflow.com/a/3485654)
+					*/
 					style={
 						{
 							...(props.characterwise && index !== 0

@@ -6,7 +6,8 @@
 }
 .blockText-span::before {
 	z-index: -1;
-	content: ' ';
+	content: attr(data-content); /*See the rant in BlockText.tsx*/
+	color: transparent; /*Because I'm actually setting content, i have to make it invisible*/
 	left: var(--block-left);
 	right: var(--block-right);
 	top: -0.03em;

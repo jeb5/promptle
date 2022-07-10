@@ -4,6 +4,7 @@
 	left: 0;
 	width: 100vw;
 	height: 100vh;
+	height: -webkit-fill-available; /*100vh for mobile safari (the toolbar is otherwise included in the view height)*/
 	background: rgba(0, 0, 0, 0.3);
 	display: flex;
 	justify-content: center;
