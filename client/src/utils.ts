@@ -31,7 +31,7 @@ export function cleanPrompt(prompt: string) {
 			.replaceAll(/([^ ])"(?! |$|[.!?:;,])/g, "$1") //Remove all double quotes that are sandwiched between a non-space to the left and a non-space or punctuation to the right //Orignal: /(?<! |^)"(?! |$|[.!?:;,])/g
 			.replaceAll(/("[.!?:;,])"/g, "$1") //Remove all double quotes that are preceded by a double quote and punctuation (ie no "!"!"!") //Original: /(?<="[.!?:;,])"/g
 			.replaceAll(/'(?=[a-zA-Z0-9]*')/g, "") //Remove all apostrophes that are succeeded by a word that also includes an apostrophe (there can be only one per word)
-			.replaceAll(/([^ ]{30})[^ ]/g, "$1") //Remove all letters preceeded by 30 non-spaces //Original: /(?<=[^ ]{30})[^ ]/g
+			.replaceAll(/([^ ]{23})[^ ]/g, "$1") //Remove all letters preceeded by 23 non-spaces //Original: /(?<=[^ ]{23})[^ ]/g
 			.replaceAll(/ {2}/g, " ") //Remove all spaces preceeded by a space (no double spaces) //Original: /(?<= ) /g
 			.trim();
 	}
