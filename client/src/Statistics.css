@@ -3,10 +3,10 @@
 	border: 2px solid var(--word-color);
 	border-radius: 2px;
 }
-.today-result-foot {
+.best-prompt-stat-footer {
 	display: flex;
 	justify-content: flex-end;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 .sharey-btn {
 	display: flex;
@@ -55,4 +55,9 @@ font-size: 1.3em;
 }
 .next-word-box > .next-word {
 	color: var(--word-color)
+}
+
+.best-prompt-stat-label {
+	font-size: 1.15em;
+	margin-bottom: 8px;
 }

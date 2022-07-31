@@ -5,8 +5,13 @@ import { TodayInfo, UserStats } from "./DataManager";
 import { CompletedAttempt } from "./Game";
 import Icon from "./Icon";
 import "./Statistics.css";
+import PromptBox from "./PromptBox";
+import { stringToWordCount } from "./utils";
+import { BlockColors } from "./BlockText";
 
 dayjs.extend(relativeTime);
+
+const emojiColorMap = { [BlockColors.PROMPT]: "🟦", [BlockColors.COMPLETION]: "⬜️", [BlockColors.WORD]: "🟩" };
 
 export default function Statistics(props: {
 	bestCompletion: CompletedAttempt | null;
@@ -14,7 +19,18 @@ export default function Statistics(props: {
 	userStats: UserStats;
 }) {
 	const share = () => {
-		alert("yet to be implemented");
+		if (props.bestCompletion === null) return;
+
+		const emojiRepresentation = props.bestCompletion.colors.map(color => emojiColorMap[color] || "").join(" ");
+
+		const shareText = `Promptle ${dayjs().format("DD/MM/YY")}: ${props.bestCompletion.length} words.\n\n"${
+			props.bestCompletion.prompt
+		}"\n${emojiRepresentation}`;
+
+		navigator.clipboard
+			.writeText(shareText)
+			.then(() => alert("Copied to clipboard"))
+			.catch(() => alert(shareText));
 	};
 
 	const timeLeftSpanRef = useRef<HTMLSpanElement>(null);
@@ -46,16 +62,29 @@ export default function Statistics(props: {
 					Today's average: {props.todayInfo.averagePromptLength || "?"} | Today's success rate:{" "}
 					{Math.round(props.todayInfo.winPercentage * 100) + "%" || "?"}
 				</p>
-				<div className="today-result-foot">
-					{props.bestCompletion !== null && (
+			</div>
+			{successfulDay && (
+				<div className="best-prompt-stat stats-box">
+					<h2 className="best-prompt-stat-label">Your best prompt:</h2>
+					<PromptBox
+						text={props.bestCompletion!.prompt + " " + props.bestCompletion!.completion}
+						colors={props.bestCompletion!.colors}
+						displayLengths={{
+							prompt: stringToWordCount(props.bestCompletion!.prompt),
+							extra: stringToWordCount(props.bestCompletion!.completion) - 1,
+							total: props.bestCompletion!.length,
+						}}
+						icon="check"
+					/>
+					<div className="best-prompt-stat-footer">
 						<button className="sharey-btn" onClick={share}>
 							{/* "sharey-btn" because adblock isn't a fan of the class name "share-btn" */}
 							Share
 							<Icon iconName="sharey" />
 						</button>
-					)}
+					</div>
 				</div>
-			</div>
+			)}
 			<div className="large-block your-stats stats-box">
 				<div className="your-stat-boxes">
 					<div className="your-stat-box">
