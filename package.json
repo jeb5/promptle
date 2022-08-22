@@ -1,0 +1,20 @@
+{
+	"name": "promptle",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"development": "docker compose -f development-compose.yml up",
+		"production": "docker compose -f production-compose.yml up",
+		"build": "./build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jeb5/promptle.git"
+	},
+	"author": "Jeb Nicholson",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/jeb5/promptle/issues"
+	},
+	"homepage": "https://github.com/jeb5/promptle#readme"
+}

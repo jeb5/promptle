@@ -6,22 +6,27 @@ services:
     restart: always
     volumes:
       - ./server/redis.conf:/data/redis.conf
-    command: redis-server redis.conf --requirepass ${REDIS_PASSWORD}
+    env_file: .env.prod
+    entrypoint: /bin/sh -c
+    command: ["redis-server redis.conf --requirepass $$REDIS_PASSWORD"]
   server:
     container_name: promptle-server
-    build: "./server"
+    build:
+      dockerfile: Production_Dockerfile
     depends_on:
-      - redis 
+      - redis
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
     restart: always
+    env_file: .env.prod
     environment:
       - NODE_ENV=production
       - SERVER_PORT=${SERVER_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - OPEN_AI_SECRET_KEY=${OPEN_AI_SECRET_KEY}
-      - SESSION_SECRET=${SESSION_SECRET}
       - BASE_PATH=${BASE_PATH}
       - SSL_ENABLED=${SSL_ENABLED}
+      # Supplied by *-secrets.env file
+      # - REDIS_PASSWORD=${REDIS_PASSWORD}
+      # - OPEN_AI_SECRET_KEY=${OPEN_AI_SECRET_KEY}
+      # - SESSION_SECRET=${SESSION_SECRET}
     volumes:
       - ./server:/app

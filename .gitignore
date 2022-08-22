@@ -1,5 +1,9 @@
 .DS_Store
-*.env
+.vscode
+# *.env
+.env.dev
+.env.prod
+development-secrets.env
 **/node_modules
 client/build
 server/client_build
