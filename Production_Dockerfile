@@ -1,21 +1,20 @@
 FROM node:18
 
 WORKDIR /app
-ENV PATH /app/client/node_modules/.bin:$PATH
-ENV PATH /app/server/node_modules/.bin:$PATH
 
 COPY ./server /app/server
 COPY ./client /app/client
 
 COPY .env /app/.env
-RUN export $(cat .env)
 
 WORKDIR /app/client
-RUN npm install
-RUN npm run build
+RUN npm install --omit=dev
+
+# These environment variables may be needed for build step
+RUN export $(xargs <../.env); npm run build
 RUN mv /app/client/build /app/server/client_build
 
 WORKDIR /app/server
-RUN npm install
+RUN npm install --omit=dev
 
 CMD ["npm", "start"] 
