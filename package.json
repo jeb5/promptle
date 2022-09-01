@@ -4,8 +4,7 @@
 	"description": "",
 	"scripts": {
 		"development": "docker compose -f development-compose.yml up",
-		"production": "docker compose -f production-compose.yml up",
-		"build": "./build"
+		"production": "docker compose -f production-compose.yml up"
 	},
 	"repository": {
 		"type": "git",

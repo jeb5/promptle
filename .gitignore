@@ -7,3 +7,4 @@ development-secrets.env
 **/node_modules
 client/build
 server/client_build
+client_files

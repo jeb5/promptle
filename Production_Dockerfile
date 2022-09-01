@@ -12,9 +12,9 @@ RUN npm install --omit=dev
 
 # These environment variables may be needed for build step
 RUN export $(xargs <../.env); npm run build
-RUN mv /app/client/build /app/server/client_build
+# RUN mv /app/client/build /app/server/client_build
 
 WORKDIR /app/server
 RUN npm install --omit=dev
-
-CMD ["npm", "start"] 
+# copying the static files into the client_build folder at container start time means these files will appear in the mounted volume, thus accessible to nginx running on the host.
+CMD cp -TR /app/client/build/ /app/server/client_build/ && npm start 

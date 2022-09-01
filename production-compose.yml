@@ -28,5 +28,6 @@ services:
       # - REDIS_PASSWORD=${REDIS_PASSWORD}
       # - OPEN_AI_SECRET_KEY=${OPEN_AI_SECRET_KEY}
       # - SESSION_SECRET=${SESSION_SECRET}
-    # volumes:
+    volumes:
+      - ./client_files:/app/server/client_build
     # - ./server:/app
